@@ -16,7 +16,7 @@ And uses a separate module for performance evaluation
 
 - [Evaluator]
 
-   [Evaluator module]: <https://github.com/KalanaRatnayake/evaluator>
+   [Evaluator]: <https://github.com/KalanaRatnayake/evaluator>
 
 for performance evaluation
 
