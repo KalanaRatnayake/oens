@@ -1,0 +1,64 @@
+area:
+  front                 :   9.50
+  back                  :   0.50
+  left                  :   9.50
+  right                 :   0.50
+  height                :   0.50
+  updateConstant        :   1.1
+  
+cluster:
+  resolution            :   0.02
+  unexploredPercentage  :   0.95
+  sideBlockCount        :   10.00
+  
+map:
+  frame                 :   "map"
+  resolution            :   0.02
+  minScanRange          :   0.90
+  maxScanRange          :   3.00
+  unBlockingDistance    :   0.10
+
+path:
+  linearNodeIgnoreCount :   10
+  angularNodeIgnoreCount:   5
+  clearanceDistance     :   2.00
+  clearanceAngle        :   1.05
+
+evaluator:
+  performance           :   "/home/kalana-laptop/Desktop/performance.txt"
+  exploration           :   "/home/kalana-laptop/Desktop/exploration.txt"
+
+robot:
+  name                  :   ""
+  frame                 :   "base_link"
+  tfupdatedelay         :   0.0001
+  
+  dimension:
+    radius              :   0.30
+    height              :   0.45
+
+  velocity:
+    max                 :   0.20
+    constant            :   1.00
+    
+  angularVelocity:
+    max                 :   0.30
+    constant            :   3.00
+    fixed               :   0.30
+  
+  movement:
+    reverseDistance     :   0.30
+    breakingDistance    :   0.10
+
+  control:
+    aligningThreshold   :   0.15 
+    movingThreshold     :   0.05
+    delay               :   0.005
+
+  initial:
+    X                   :   1.0
+    Y                   :   0.5
+    Z                   :   0.0
+    Roll                :   0.0
+    Pitch               :   0.0
+    Yaw                 :   0.0

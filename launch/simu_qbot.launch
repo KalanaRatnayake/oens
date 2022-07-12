@@ -1,0 +1,46 @@
+<launch>
+    <!-- load parameters -->
+    <rosparam command="load" file="$(find oens)/param/simu_qbot.yaml"/>
+
+    <!-- Start RTABMap localization -->
+    <include file="$(find oens)/launch/single_qbot_slam.launch" />
+
+    <!-- Start Explore node -->
+    <node pkg="exploration_module" type="exploration_module_node" name="explore" output="screen" launch-prefix="valgrind --leak-check=full --show-leak-kinds=all">
+        <remap from="octomap" to="/octomap_full" />
+        <remap from="position" to="/corrected_odom" />
+    </node>
+
+    <!-- Start Control node -->
+    <node pkg="control_module" type="control_module_node" name="control" output="screen">
+        <remap from="motor_power" to="/mobile_base/commands/motor_power"/>
+		<remap from="cmd_vel" to="/mobile_base/commands/velocity"/>
+		<remap from="position" to="/corrected_odom" />
+		<remap from="bumper" to="/mobile_base/events/bumper" />
+    </node>
+
+    <!-- Start Position Tracker node -->
+    <node pkg="control_module" type="control_module_position_node" name="tracker" output="screen">
+        <remap from="positionIn" to="/odom" />
+        <remap from="positionOut" to="/corrected_odom" />
+    </node>
+
+    <!-- Start Planner node -->
+    <node pkg="planning_module" type="planning_module_node" name="planner" output="screen">
+        <remap from="octomap" to="/octomap_full" />
+        <remap from="position" to="/corrected_odom" />
+    </node>
+
+    <!-- Evaluator node -->
+    <node pkg="evaluator" type="evaluator_performance_node" name="clientPerformanceEvaluator" output="screen">
+        <remap from="odometry" to="odom" />
+        <remap from="imu" to="mobile_base/sensors/imu_data" />
+    </node>
+
+    <node pkg="evaluator" type="evaluator_exploration_node" name="clientExplorationEvaluator" output="screen">
+        <remap from="octomap" to="/octomap_full" />
+    </node>
+</launch>
+
+<!-- for debugging errors use launch-prefix="gdb -ex run -args" -->
+<!-- for debugging memory leaks use launch-prefix="valgrind" -->

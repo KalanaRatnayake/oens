@@ -1,0 +1,23 @@
+<launch>
+    <!-- load parameters -->
+    <rosparam command="load" file="$(find oens)/param/simu_qbot.yaml"/>
+
+    <!-- Start RTABMap localization -->
+    <include file="$(find oens)/launch/single_qbot_slam.launch" />
+
+    <!-- Start Teleop localization -->
+    <include file="$(find kobuki_keyop)/launch/keyop.launch" />
+
+    <!-- Evaluator node -->
+    <node pkg="evaluator" type="evaluator_performance_node" name="clientPerformanceEvaluator" output="screen">
+        <remap from="odometry" to="odom" />
+        <remap from="imu" to="mobile_base/sensors/imu_data" />
+    </node>
+
+    <node pkg="evaluator" type="evaluator_exploration_node" name="clientExplorationEvaluator" output="screen">
+        <remap from="octomap" to="/octomap_full" />
+    </node>
+</launch>
+
+<!-- for debugging errors use launch-prefix="gdb -ex run -args" -->
+<!-- for debugging memory leaks use launch-prefix="valgrind" -->

@@ -1,0 +1,51 @@
+<launch>
+
+    <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync">
+        <remap from="rgb/image"       to="camera/rgb/image_raw"/>
+        <remap from="depth/image"     to="camera/depth/image_raw"/>
+        <remap from="rgb/camera_info" to="camera/rgb/camera_info"/>
+        <remap from="depth/camera_info" to="camera/depth/camera_info"/>
+        <remap from="rgbd_image"      to="rgbd_image"/> <!-- output -->
+        
+        <!-- Should be true for not synchronized camera topics (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
+        <param name="approx_sync"       value="true"/> 
+    </node>
+
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" args="--delete_db_on_start">
+        <remap from="odom"          to="odom"/>
+        <remap from="imu"           to="imu"/>
+        <remap from="rgbd_image"    to="rgbd_image"/>
+        
+        <param name="frame_id"                       value="base_link"/>
+        <param name="odom_frame_id"                  value="odom"/>
+        <param name="map_frame_id"                   value="map"/>
+        <param name="subscribe_depth"                value="false"/>
+        <param name="subscribe_rgb"                  value="false"/>
+        <param name="subscribe_rgbd"                 value="true"/>
+        <param name="queue_size"                     value="10"/>
+        <param name="odom_tf_angular_variance"       value="0.001"/>
+        <param name="odom_tf_linear_variance"        value="0.001"/>
+        <param name="tf_delay"                       value="0.001"/>
+        <param name="cloud_output_voxelized"         value="false"/>
+        <param name="database_path"                  value="~/.ros/rtabmap_qbot.db"/>
+        <param name="Grid/CellSize"                  value="0.02"/>
+        <param name="Grid/RangeMax"                  value="3.00"/>
+        <param name="Grid/3D"                        value="true"/>
+        <param name="Grid/RangeMin"                  value="0.00"/>
+        <param name="Grid/RayTracing"                value="true"/>
+        <param name="GridGlobal/MinSize"             value="20"/>
+        <param name="Kp/MaxDepth"                    value="0.0"/>
+        <param name="Reg/Strategy"                   value="0"/>      <!-- Loop closure transformation: 0=Visual, 1=ICP, 2=Visual+ICP -->
+        <param name="Reg/Force3DoF"                  value="true"/>
+        <param name="Vis/MinInliers"                 value="20"/>      <!-- 3D visual words minimum inliers to accept loop closure -->
+        <param name="Vis/InlierDistance"             value="0.05"/>     <!-- 3D visual words correspondence distance -->
+        <param name="RGBD/AngularUpdate"             value="0.05"/>     <!-- Update map only if the robot is moving -->
+        <param name="RGBD/LinearUpdate"              value="0.05"/>     <!-- Update map only if the robot is moving -->
+        <param name="RGBD/ProximityPathMaxNeighbors" value="0"/> 
+        <param name="RGBD/OptimizeFromGraphEnd"      value="false"/>
+        <param name="RGBD/NeighborLinkRefining"      value="false"/>
+        <param name="RGBD/ProximityBySpace"          value="true"/>
+        <param name="Rtabmap/TimeThr"                value="0"/>
+        <param name="Mem/RehearsalSimilarity"        value="0.50"/>
+    </node>
+</launch>
