@@ -20,16 +20,6 @@ And uses a separate module for performance evaluation
 
 for performance evaluation
 
-## Requirements
-
-* [Ubunut 18.04] - Prefered operating system
-* [ROS melodic] - Robot Platform used for development and use
-* [Git]         - As version control system
-
-   [Ubunut 18.04]: <https://www.linuxtechi.com/ubuntu-18-04-lts-desktop-installation-guide-screenshots/>
-   [ROS melodic]: <http://wiki.ros.org/melodic/Installation/Ubuntu>
-   [Git]: <https://git-scm.com/>
-   
 <br>
 
 ## Basic Environment Setup
@@ -124,7 +114,7 @@ source devel/setup.bash
 roslaunch simulations single_qbot_large.launch
 ```
 
-To start the rosbot's control systems,
+To start the qbot's control systems,
 
 ```sh
 source devel/setup.bash
@@ -140,7 +130,7 @@ roslaunch rviz visualizer_single_qbot.launch
 
 <br>
 
-## Simulation of single qbot system using manual controller
+## Simulation of single qbot system with manual controller
 
 First start the simulation,
 
